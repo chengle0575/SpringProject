@@ -1,26 +1,33 @@
 package com.example.demo;
 
 import Model.Review;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class ReviewController {
 
-    @GetMapping("/getoneReview")
-    public Review getReview(){
+    private final ReviewProxy reviewsProxy;
 
-        Review rv=new Review("aaa","not bad la");
-        return rv;
+    @Autowired
+    public ReviewController(ReviewProxy proxy){
+
+        this.reviewsProxy = proxy;
     }
 
 
 
+    @PostMapping("/reviews")
+    public Review addreview(
+            @RequestBody Review review
+    ){
+        return reviewsProxy.addReview(review);
+    }
+/*
     @GetMapping("/all")
     public List<Review> getallreviews(){
         Review rv1=new Review("a","good");
@@ -28,10 +35,12 @@ public class ReviewController {
 
         return List.of(rv1,rv2);
     }
-
+*/
     @GetMapping("/header")
     public ResponseEntity<Review> getreviewWithHeader(){
-        Review rv=new Review("c","just soso");
+        Review rv=new Review();
+        rv.setName("c");
+        rv.setContent("just soso");
 
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)

@@ -34,15 +34,16 @@ public class MainController {
 
 
 
-
     private final ReviewService reviewService;
     private final LoginUserManageService loginmanageService;
+    //private final ReviewController reviewController;
 
 
 
     public MainController(ReviewService reviewserv,LoginUserManageService loginmanageService){
         this.reviewService=reviewserv;
         this.loginmanageService=loginmanageService;
+        //this.reviewController=reviewController;
 
     }
 
@@ -61,14 +62,17 @@ public class MainController {
         return "redirect:/";
     }
 
-
+/*
     @GetMapping("/reviews")
     public String reviews(Model m){
-        var reviews=reviewService.findAll();
+        //var reviews=reviewService.findAll();
+        var reviews=this.reviewController.getAllReview();
         m.addAttribute("reviews",reviews);  //send the data to view
 
         return "reviews.html";
     }
+
+
 
     @PostMapping("/reviews")
     public String addreview(
@@ -96,5 +100,5 @@ public class MainController {
         return "reviews.html";
 
     }
-
+ */
 }
